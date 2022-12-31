@@ -1,8 +1,5 @@
 let homeScore = document.getElementById("homeScore"), guestScore = document.getElementById("guestScore"), scoreHome = 0 ,scoreAway = 0, displayTimer = document.getElementById("display"), startGame = document.getElementById("startGame-btn"), isShow = true, currentQuarter = document.getElementById("quarter")
 
-const startTime = 12
-let countDown = startTime * 60
-
 function addOneHome(){
     scoreHome += 1
     homeScore.textContent = scoreHome
@@ -47,6 +44,8 @@ function reset(){
 
 
 function start(){
+    const startTime = 12
+    let countDown = startTime * 60
     let refreshIntervalId = setInterval(updateCountdown, 1000)
     
     function updateCountdown(){
@@ -60,12 +59,29 @@ function start(){
         countDown--;
         
         if(countDown < 0){
-           countDown = 0
-           clearInterval(refreshIntervalId)
-           currentQuarter.textContent = "Q2"
+            if(countDown < 0 && currentQuarter.textContent === "Q1"){
+                currentQuarter.textContent = "Q2"
+                countDown = startTime * 60
+            }
+            else if(countDown < 0 && currentQuarter.textContent === "Q2"){
+                currentQuarter.textContent = "Q3"
+                countDown = startTime * 60
+            }
+            else if(countDown < 0 && currentQuarter.textContent === "Q3"){
+                currentQuarter.textContent = "Q4"
+                countDown = startTime * 60
+            }
+            else if(countDown < 0 && currentQuarter.textContent === "Q4"){
+                currentQuarter.textContent = "End of Game!"
+                countDown = 0
+                clearInterval(refreshIntervalId)
+            }
+            else{
+                currentQuarter.textContent = "Error!"
+                countDown = 0
+                clearInterval(refreshIntervalId)
+            }
         }
-
     }
-    
     startGame.style.display = "none"
 }
