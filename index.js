@@ -44,7 +44,7 @@ function reset(){
 
 
 function start(){
-    const startTime = 12
+    const startTime = .1
     let countDown = startTime * 60
     let refreshIntervalId = setInterval(updateCountdown, 1000)
     
